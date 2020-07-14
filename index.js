@@ -71,27 +71,45 @@ function start() {
 function addNewDepartment() {
     start();
 }
-                    
+
 function viewDepartments() {
-    start();
+    var query = "SELECT * FROM department";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+
+        start();
+    });
 }
-                    
+
 function addNewRole() {
     start();
 }
-                    
+
 function viewRoles() {
-    start();
+    var query = "SELECT * FROM role";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+
+        start();
+    });
 }
-                    
+
 function addNewEmployee() {
     start();
 }
-                    
+
 function viewEmployees() {
-    start();
+    var query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+
+        start();
+    });
 }
-                    
+
 function updateEmployeeRole() {
     start();
 }
