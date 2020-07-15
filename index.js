@@ -158,7 +158,8 @@ function addNewEmployee() {
 }
 
 function viewEmployees() {
-    var query = "SELECT * FROM employee";
+    var query = `select CONCAT(A.first_name, " ", A.last_name) AS name, title, CONCAT(B.first_name, " ", B.last_name) as manager 
+    from employee A inner join role ON A.role_id = role.id left join employee B on a.manager_id = b.id`;
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
