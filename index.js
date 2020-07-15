@@ -224,7 +224,54 @@ function viewEmployees() {
 }
 
 function updateEmployeeRole() {
-    start();
+    connection.query("SELECT * FROM role", (err, roleRes) => {
+        if (err) {
+            throw err;
+        }
+        const roleNames = roleRes.map((row) => row.title);
+
+        connection.query("SELECT * FROM employee", (err, employeeRes) => {
+
+            const employeeNames = employeeRes.map((row) => row.last_name);
+
+            inquirer
+                .prompt([
+                    {
+                        name: "employee",
+                        type: "rawlist",
+                        choices: employeeNames,
+                        message: "Which employee's role do you want to change?",
+                    },
+                    {
+                        name: "role",
+                        type: "rawlist",
+                        choices: roleNames,
+                        message: "What is the new role?",
+                    }
+                ]).then((answers) => {
+                    const chosenRole = roleRes.find((row) => row.title === answers.role);
+                    const chosenEmployee = employeeRes.find((row) => row.last_name === answers.employee);
+
+                    var query = "UPDATE employee SET ? WHERE ?";
+                    connection.query(query,
+                        [
+                            {
+                                role_id: chosenRole.id
+                            },
+                            {
+                                last_name: chosenEmployee.last_name
+                            }
+                        ],
+                        function (err) {
+                            if (err) throw err;
+
+                            console.log(answers.employee + " role changed!");
+
+                            start();
+                        });
+                });
+        });
+    });
 }
 
 function quit() {
