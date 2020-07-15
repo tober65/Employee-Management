@@ -144,7 +144,7 @@ function addNewRole() {
 }
 
 function viewRoles() {
-    var query = "select title, salary, name from role inner join department on role.department_id = department.id;";
+    var query = "select title, salary, name as department from role inner join department on role.department_id = department.id;";
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
