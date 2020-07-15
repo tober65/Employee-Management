@@ -87,7 +87,7 @@ function addNewDepartment() {
 }
 
 function viewDepartments() {
-    var query = "SELECT * FROM department";
+    var query = "SELECT name FROM department";
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
@@ -134,7 +134,7 @@ function addNewRole() {
                     function (err) {
                         if (err) throw err;
 
-                        console.log(answers.name + " role added!");
+                        console.log(answers.title + " role added!");
 
                         start();
                     });
@@ -144,7 +144,7 @@ function addNewRole() {
 }
 
 function viewRoles() {
-    var query = "SELECT * FROM role";
+    var query = "select title, salary, name from role inner join department on role.department_id = department.id;";
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
